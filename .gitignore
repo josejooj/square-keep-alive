@@ -1,5 +1,13 @@
-.env
-package-lock.json
+
+# folders
+
 node_modules
 dist
+logs
+
+# files
+
+.env
+package-lock.json
 *.zip
+*.log
