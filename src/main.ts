@@ -36,14 +36,16 @@ const square = axios.create({ baseURL: "https://api.squarecloud.app/v2", headers
 
                 if (status === 200) log('INFO', `[CHECK ${i + 1}] - The application "${app.id}" was offline, and i restarted it successfully!`);
                 else log('WARNING', `[CHECK ${i + 1}] - I received the HTTP ERROR ${status} when i tried to restart the application "${app.id}" (ID ${app.id})`)
+
+            }
             
-            }            
+            ++i
 
         } catch (e: any) {
             if (!e.message.includes("Cannot destructure")) throw e;
         }
 
-        setTimeout(check.bind(null, i + 1), 1000 * 16);
+        setTimeout(check.bind(null, i), 1000 * 16);
     }
 
     check();
