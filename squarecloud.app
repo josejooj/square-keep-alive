@@ -1,4 +1,4 @@
 DISPLAY_NAME=Square Keep Alive
 MAIN=dist/main.js
-MEMORY=100
+MEMORY=256
 VERSION=recommended
