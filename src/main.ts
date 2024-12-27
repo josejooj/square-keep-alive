@@ -1,9 +1,6 @@
 import { Status } from "./typing";
-import { config as ConfigEnv } from 'dotenv';
 import axios from "axios";
 import fs from 'fs';
-
-ConfigEnv()
 
 const log = (tag: string, msg: string) => console.log(`[${tag}] - ${msg}`)
 const square = axios.create({ baseURL: "https://api.squarecloud.app/v2", headers: { Authorization: process.env.SQUARE_API_KEY } });
