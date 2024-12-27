@@ -1,20 +1,17 @@
 import { Status } from "./typing";
-import axios from "axios";
 import fs from 'fs';
 
 const log = (tag: string, msg: string) => console.log(`[${tag}] - ${msg}`)
-const square = axios.create({ baseURL: "https://api.squarecloud.app/v2", headers: { Authorization: process.env.SQUARE_API_KEY } });
-const discord = axios.create({ baseURL: "https://discord.com/api/v10/" })
-
-square.interceptors.response.use(res => res, error => error.response);
-discord.interceptors.response.use(res => res, error => error.response);
+const square_url = "https://api.squarecloud.app/v2",
+    discord_url = "https://discord.com/api/v10/",
+    square_init = { headers: { Authorization: process.env.SQUARE_API_KEY! } };
 
 (async () => {
 
-    const { data, status } = await square.get(`/user`).catch(e => e.response);
-    const user = data.response?.user as { tag: string, plan: { name: string } };
+    const user_req = await fetch(`${square_url}/user`, square_init);
+    const user = await user_req.json().then(r => r.response.user) as { tag: string, plan: { name: string } };
 
-    if (status === 401) return log('ERROR', "Please, verify your API Key!")
+    if (user_req.status === 401) return log('ERROR', "Please, verify your API Key!")
     if (user.plan.name === 'free') log('ALERT', `Don't host me on Square Cloud with free plan.`) // maybe you are hosting on another machine
     if (!fs.existsSync("./logs")) fs.mkdirSync("./logs")
 
